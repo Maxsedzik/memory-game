@@ -1,13 +1,28 @@
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Card = () => {
+const Card = ({ number }) => {
 	return (
-		<View>
-			<Text>Memory Game</Text>
-		</View>
+		<TouchableOpacity style={styles.card}>
+			<View>
+				<Text style={styles.text}>{number}</Text>
+			</View>
+		</TouchableOpacity>
 	);
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+	card: {
+		backgroundColor: "#220030",
+		aspectRatio: 0.45,
+		borderRadius: 15,
+		width: "30%",
+		margin: 5,
+		alignItems: "center",
+		justifyContent: "center",
+	},
+	text: {
+		color: "#f4f4f4",
+	},
+});
 
 export default Card;
