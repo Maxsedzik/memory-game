@@ -1,10 +1,10 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Card = ({ number }) => {
+const Card = ({ value }) => {
 	return (
 		<TouchableOpacity style={styles.card}>
 			<View>
-				<Text style={styles.text}>{number}</Text>
+				<Text style={styles.text}>{value}</Text>
 			</View>
 		</TouchableOpacity>
 	);
