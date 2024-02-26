@@ -1,16 +1,25 @@
+import React, { useContext } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import Header from "./components/Header";
 import CardsField from "./components/CardsField";
-import { AppProvider } from "./context/AppContext";
+import AppContext, { AppProvider } from "./context/AppContext";
 
 const App = () => {
 	return (
 		<AppProvider>
-			<View style={styles.container}>
-				<Header />
-				<CardsField />
-			</View>
+			<AppContent />
 		</AppProvider>
+	);
+};
+
+const AppContent = () => {
+	const { cardsSelected, mixedCards, cards } = useContext(AppContext);
+	return (
+		<View style={styles.container}>
+			<Header />
+			<Text>{cardsSelected.length}</Text>
+			<CardsField />
+		</View>
 	);
 };
 
@@ -21,4 +30,5 @@ const styles = StyleSheet.create({
 		paddingTop: 60,
 	},
 });
+
 export default App;

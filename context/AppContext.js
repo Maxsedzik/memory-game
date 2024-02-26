@@ -1,24 +1,24 @@
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 
 const AppContext = createContext();
 
 export const AppProvider = ({ children }) => {
 	const [cards, setCards] = useState([
-		{ id: 1, value: "A" },
-		{ id: 2, value: "A" },
-		{ id: 3, value: "B" },
-		{ id: 4, value: "B" },
-		{ id: 5, value: "C" },
-		{ id: 6, value: "C" },
-		{ id: 7, value: "D" },
-		{ id: 8, value: "D" },
-		{ id: 9, value: "E" },
-		{ id: 10, value: "E" },
-		{ id: 11, value: "F" },
-		{ id: 12, value: "F" },
+		{ id: 1, value: "A", selected: false },
+		{ id: 2, value: "A", selected: false },
+		{ id: 3, value: "B", selected: false },
+		{ id: 4, value: "B", selected: false },
+		{ id: 5, value: "C", selected: false },
+		{ id: 6, value: "C", selected: false },
+		{ id: 7, value: "D", selected: false },
+		{ id: 8, value: "D", selected: false },
+		{ id: 9, value: "E", selected: false },
+		{ id: 10, value: "E", selected: false },
+		{ id: 11, value: "F", selected: false },
+		{ id: 12, value: "F", selected: false },
 	]);
 
-	let cardsSelected = [];
+	const [cardsSelected, setCardsSelected] = useState([]);
 
 	const mixCards = (x) => {
 		let mixedCards = [...x];
@@ -29,20 +29,35 @@ export const AppProvider = ({ children }) => {
 		return mixedCards;
 	};
 
-	let mixedCards = mixCards(numbers);
+	const [mixedCards, setMixedCards] = useState([]);
+
+	useEffect(() => {
+		setMixedCards(mixCards(cards));
+	}, []);
 
 	function cardSelect(value, id) {
-		cardsSelected.push({ value, id });
+		setCardsSelected([...cardsSelected, { value, id }]);
+		setCards((prevCards) => {
+			return prevCards.map((card) => {
+				if (card.id === id) {
+					return { ...card, selected: true };
+				}
+				return card;
+			});
+		});
 	}
 
-	if (cardsSelected.length === 2) {
-		if (cardsSelected[0].value === cardsSelected[1].value) {
-			//Delete cards from the stack
+	useEffect(() => {
+		if (cardsSelected.length === 2) {
+			if (cardsSelected[0].value === cardsSelected[1].value) {
+				//Delete cards from the stack
+			}
 		}
-	}
+	}, [cardsSelected]);
 
 	return (
-		<AppContext.Provider value={{ mixCards, mixedCards, cardSelect }}>
+		<AppContext.Provider
+			value={{ mixCards, mixedCards, cardSelect, cardsSelected, cards }}>
 			{children}
 		</AppContext.Provider>
 	);

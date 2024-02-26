@@ -12,7 +12,7 @@ const CardsField = () => {
 					<Card
 						key={card.id}
 						value={card.value}
-						onPress={cardSelect(card.value, card.id)}
+						onPress={() => cardSelect(card.value, card.id)}
 					/>
 				);
 			})}
