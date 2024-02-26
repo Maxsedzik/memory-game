@@ -1,8 +1,8 @@
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const Card = ({ value }) => {
+const Card = ({ value, onPress }) => {
 	return (
-		<TouchableOpacity style={styles.card}>
+		<TouchableOpacity style={styles.card} onPress={onPress}>
 			<View>
 				<Text style={styles.text}>{value}</Text>
 			</View>
