@@ -13,12 +13,28 @@ const App = () => {
 };
 
 const AppContent = () => {
-	const { cardsSelected, mixedCards, cards } = useContext(AppContext);
+	const {
+		cardsSelected,
+		mixedCards,
+		cards,
+		isMatched,
+		pairedCards,
+		isGameWon,
+		setIsGameWon,
+	} = useContext(AppContext);
+
+	if (pairedCards.length === 6) {
+		setIsGameWon(true);
+	}
+
 	return (
 		<View style={styles.container}>
 			<Header />
-			<Text>{cardsSelected.length}</Text>
-			<CardsField />
+			{/* <Text>{cardsSelected.length}</Text>
+			<Text>{isMatched.toString()}</Text>
+			<Text>{pairedCards}</Text> */}
+			{isGameWon && <Text>You Won!</Text>}
+			{!isGameWon && <CardsField />}
 		</View>
 	);
 };
