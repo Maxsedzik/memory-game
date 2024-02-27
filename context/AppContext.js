@@ -19,7 +19,7 @@ export const AppProvider = ({ children }) => {
 	]);
 
 	const [cardsSelected, setCardsSelected] = useState([]);
-
+	const [pairedCards, setPairedCards] = useState([]);
 	const mixCards = (x) => {
 		let mixedCards = [...x];
 		for (let i = mixedCards.length - 1; i > 0; i--) {
@@ -30,7 +30,9 @@ export const AppProvider = ({ children }) => {
 	};
 
 	const [mixedCards, setMixedCards] = useState([]);
-
+	const [isClickable, setIsClickable] = useState(true);
+	const [isMatched, setIsMatched] = useState(false);
+	const [isGameWon, setIsGameWon] = useState(false);
 	useEffect(() => {
 		setMixedCards(mixCards(cards));
 	}, []);
@@ -49,15 +51,33 @@ export const AppProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (cardsSelected.length === 2) {
+			setIsClickable(false);
 			if (cardsSelected[0].value === cardsSelected[1].value) {
-				//Delete cards from the stack
+				setIsMatched(true);
+				setPairedCards([...pairedCards, cardsSelected[0].value]);
+				setCardsSelected([]);
+				setTimeout(() => setIsClickable(true), 1000);
+			} else {
+				setCardsSelected([]);
+				setTimeout(() => setIsClickable(true), 1000);
 			}
 		}
 	}, [cardsSelected]);
 
 	return (
 		<AppContext.Provider
-			value={{ mixCards, mixedCards, cardSelect, cardsSelected, cards }}>
+			value={{
+				mixCards,
+				mixedCards,
+				cardSelect,
+				cardsSelected,
+				cards,
+				isClickable,
+				isMatched,
+				pairedCards,
+				isGameWon,
+				setIsGameWon,
+			}}>
 			{children}
 		</AppContext.Provider>
 	);

@@ -1,8 +1,15 @@
+import { useContext } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import AppContext from "../context/AppContext";
 
 const Card = ({ value, onPress }) => {
+	const { isClickable, pairedCards } = useContext(AppContext);
+	const isCardClickable = isClickable && !pairedCards.includes(value);
 	return (
-		<TouchableOpacity style={styles.card} onPress={onPress}>
+		<TouchableOpacity
+			style={styles.card}
+			onPress={onPress}
+			disabled={!isCardClickable}>
 			<View>
 				<Text style={styles.text}>{value}</Text>
 			</View>
